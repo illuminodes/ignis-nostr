@@ -100,8 +100,12 @@ where
         }
     }
     pub fn get_resource_identifier(&self) -> FhirIdentifier {
+        let relay = match &self.relay {
+            Some(relay) => relay,
+            None => "local",
+        };
         FhirIdentifier::new(
-            format!("nostr:{}", self.relay.as_ref().unwrap()),
+            format!("nostr:{}", relay),
             self.get_resource_id().unwrap().to_string(),
         )
     }

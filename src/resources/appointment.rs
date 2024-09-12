@@ -5,6 +5,7 @@ use crate::{
     valuesets::{FhirAppointmentStatus, FhirSpecialty},
 };
 use serde::{Deserialize, Serialize, de::DeserializeOwned};
+use serde_json::Value;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct FhirAppointment<T> {
@@ -15,6 +16,7 @@ pub struct FhirAppointment<T> {
     start: FhirInstant,
     end: FhirInstant,
     description: Option<String>,
+    extension: Option<Value>,
 }
 impl<T> FhirAppointment<T>
 where
@@ -27,6 +29,7 @@ where
         start: FhirInstant,
         end: FhirInstant,
         description: Option<String>,
+        extension: Option<Value>,
     ) -> Self {
         Self {
             status,
@@ -35,7 +38,11 @@ where
             start,
             end,
             description,
+            extension,
         }
+    }
+    pub fn get_extension(&self) -> &Option<Value> {
+        &self.extension
     }
     pub fn get_start(&self) -> &FhirInstant {
         &self.start
@@ -45,6 +52,18 @@ where
     }
     pub fn get_specialty(&self) -> &FhirSpecialty {
         &self.specialty
+    }
+    pub fn get_description(&self) -> Option<String> {
+        self.description.clone()
+    }
+    pub fn change_status(&mut self, status: FhirAppointmentStatus) {
+        self.status = status;
+    }
+    pub fn get_status(&self) -> &FhirAppointmentStatus {
+        &self.status
+    }
+    pub fn get_service_category(&self) -> &T {
+        &self.service_category
     }
 }
 impl<T> FhirResource for FhirAppointment<T>

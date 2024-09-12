@@ -11,7 +11,7 @@ homepage = "https://github.com/illuminodes/ignis-nostr"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-nostro2 = "0.1.25"
+nostro2 = "0.1.26"
 serde = { version = "1.0.125", features = ["derive"] }
 serde_json = "1.0.125"
 
